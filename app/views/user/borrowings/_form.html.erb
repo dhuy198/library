@@ -1,0 +1,42 @@
+<%= form_with(model: [:user, @borrowing], local: true, class: "space-y-6 bg-white p-6 rounded-lg shadow-md") do |f| %>
+  <h2 class="text-xl font-bold text-gray-800">Tạo phiếu mượn mới</h2>
+
+  <div>
+    <%= f.label :end_at, "Hạn trả", class: "block text-sm font-medium text-gray-700" %>
+    <%= f.date_field :end_at, class: "mt-1 block w-full max-w-[200px] border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" %>
+  </div>
+
+  <div>
+    
+    <label class="block text-sm font-semibold text-gray-800 mb-2">Sách và số lượng</label>
+    <div class="space-y-3">
+      <%= f.fields_for :borrowing_items do |item_fields| %>
+        <% book = item_fields.object.book %>
+        <% if book.delete_flag == false %>
+          <div class="flex items-center bg-gray-50 p-3 rounded shadow-sm hover:bg-gray-100 relative">
+            <%= item_fields.hidden_field :book_id %>
+            <span class="text-gray-700 text-sm font-medium mr-[30px]"><%= book.title %></span>
+            <span class="text-gray-700 text-sm font-medium mr-[30px]"><%= book.quantity_in_stock %></span>
+            <%= item_fields.number_field :quantity, min: 0, value: item_fields.object.quantity || 0,
+                class: "w-20 border-gray-300 rounded-md shadow-sm text-center focus:ring-blue-500 focus:border-blue-500 absolute right-[10px]" %>
+          </div>  
+        <% end %>
+      <% end %>
+    </div>
+
+  </div>
+
+  <div>
+    <%= f.submit "Tạo phiếu mượn", class: "px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
+  </div>
+<% end %>
+
+<% if @borrowing.errors.any? %>
+  <div class="text-red-600 text-sm mb-4">
+    <ul>
+      <% @borrowing.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

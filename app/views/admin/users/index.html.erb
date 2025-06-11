@@ -1,0 +1,44 @@
+<div class="max-w-[1400px] mx-auto">
+
+  <h1 class="text-3xl font-bold mb-6 inline-block mr-[20px]">
+    <%= link_to "Books", admin_books_path%>
+  </h1>
+  
+  <h1 class="text-3xl font-bold mb-6 inline-block mr-[20px]">
+    <%= link_to "Users", admin_users_path%>
+  </h1>
+  
+
+  <h1 class="text-3xl font-bold mb-6 inline-block mr-[20px]">
+    <%= link_to "Borrowings", admin_borrowings_path%>
+  </h1>
+
+  
+  <div class="mb-4 flex">
+    <%= button_to "Log out", destroy_admin_session_path, method: :delete, class: "px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 inline-block" %>
+  </div>
+
+  <table class="min-w-full border border-gray-300">
+    <thead>
+      <tr class="bg-gray-100">
+        <th class="border px-4 py-2">Email</th>
+        <th class="border px-4 py-2">Name</th>
+        <th class="border px-4 py-2">Password</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td class="border px-4 py-2"><%= user.email %></td>
+          <td class="border px-4 py-2"><%= user.name %></td>
+          <td class="border px-4 py-2"><%= user.encrypted_password%></td>
+          <td class="border px-4 py-2">
+            <%= button_to "Delete", delete_admin_user_path(user), method: :patch, data: { confirm: "Are you sure?" }, class: "text-red-600 hover:underline" %>
+            
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+

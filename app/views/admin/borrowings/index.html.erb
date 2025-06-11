@@ -1,0 +1,76 @@
+
+ <h1 class="text-3xl font-bold mb-6 inline-block mr-[20px]">
+    <%= link_to "Books", admin_books_path%>
+  </h1>
+  
+  <h1 class="text-3xl font-bold mb-6 inline-block mr-[20px]">
+    <%= link_to "Users", admin_users_path%>
+  </h1>
+  
+
+  <h1 class="text-3xl font-bold mb-6 inline-block mr-[20px]">
+    <%= link_to "Borrowings", admin_borrowings_path%>
+  </h1>
+
+<% if @borrowings.any? %>
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white shadow-md rounded-lg overflow-hidden">
+      <thead class="bg-gray-100 text-gray-700 text-sm uppercase">
+        <tr>
+          <th class="px-4 py-2 text-left">ID</th>
+          <th class="px-4 py-2 text-left">Người mượn</th>
+          <th class="px-4 py-2 text-left">Danh sách | Số lượng </th>
+          <th class="px-4 py-2 text-left">Ngày mượn</th>
+          <th class="px-4 py-2 text-left">Ngày dự kiến trả</th>
+          <th class="px-4 py-2 text-left">Ngày trả thực tế</th>
+          <th class="px-4 py-2 text-left">Trạng thái</th>
+        </tr>
+      </thead>
+
+      <tbody class="divide-y divide-gray-200 text-gray-800">
+        <% @borrowings.each do |borrowing| %>
+          <tr>
+            <td class="px-4 py-2"><%= borrowing.id %></td>
+
+            <td class="px-4 py-2">
+              <% if borrowing.user %>
+                <%= borrowing.user.email %>
+              <% else %>
+                <span class="text-red-500 italic">Không có</span>
+              <% end %>
+            </td>
+
+            <td class="px-4 py-2">
+              <% if borrowing.borrowing_items.any? %>
+                <ul class="list-disc pl-5">
+                  <% borrowing.borrowing_items.each do |item| %>
+                    <li>
+                      <%= link_to item.book.title, admin_book_path(item.book), class: "text-blue-600 hover:underline" if item.book %> | <%= item.quantity%>
+                    </li>
+                  <% end %>
+                </ul>
+              <% else %>
+                <span class="text-gray-500 italic">Không có sách</span>
+              <% end %>
+            </td>
+
+            <td class="px-4 py-2"><%= l(borrowing.start_at) if borrowing.start_at %></td>
+            <td class="px-4 py-2"><%= l(borrowing.end_at) if borrowing.end_at %></td>
+            <td class="px-4 py-2"><%= l(borrowing.actual_end_at) if borrowing.actual_end_at %></td>
+
+            <td class="px-4 py-2">
+              <% if borrowing.actual_end_at %>
+                <span class="text-red-600 font-semibold">Đã trả</span>
+              <% else %>
+                <span class="text-green-600 font-semibold">Chưa trả</span>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <p class="text-gray-600 italic">Chưa có bản ghi mượn sách nào trong hệ thống.</p>
+<% end %>
+

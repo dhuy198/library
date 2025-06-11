@@ -1,0 +1,10 @@
+<%= form_with model: [:user,book, rating], local: true do |f| %>
+  <div>
+    <%= f.label :star, "Điểm (1–5)" %>
+    <%= f.number_field :star, in: 1..5, required: true, class: "border p-1" %>
+  </div>
+
+  <div class="mt-4">
+    <%= f.submit "Gửi đánh giá", class: "bg-blue-600 text-white px-4 py-2 rounded" %>
+  </div>
+<% end %>

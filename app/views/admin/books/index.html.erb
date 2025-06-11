@@ -1,0 +1,50 @@
+<div class="max-w-[1400px] mx-auto">
+
+  <h1 class="text-3xl font-bold mb-6 inline-block mr-[20px]">
+    <%= link_to "Books", admin_books_path%>
+  </h1>
+  
+  <h1 class="text-3xl font-bold mb-6 inline-block mr-[20px]">
+    <%= link_to "Users", admin_users_path%>
+  </h1>
+  
+
+  <h1 class="text-3xl font-bold mb-6 inline-block mr-[20px]">
+    <%= link_to "Borrowings", admin_borrowings_path%>
+  </h1>
+
+  <div class="mb-4 flex">
+    <%= link_to "New Book", new_admin_book_path, class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 inline-block mr-[30px]" %>
+    <%= button_to "Log out", destroy_admin_session_path, method: :delete, class: "px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 inline-block" %>
+  </div>
+
+  <table class="min-w-full border border-gray-300">
+    <thead>
+      <tr class="bg-gray-100">
+        <th class="border px-4 py-2">Title</th>
+        <th class="border px-4 py-2">Author</th>
+        <th class="border px-4 py-2">Genre</th>
+        <th class="border px-4 py-2">Year</th>
+        <th class="border px-4 py-2">Total</th>
+        <th class="border px-4 py-2">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @books.each do |book| %>
+        <tr>
+          <td class="border px-4 py-2"><%= book.title %></td>
+          <td class="border px-4 py-2"><%= book.author.name if book.author %></td>
+          <td class="border px-4 py-2"><%= book.genre.name if book.genre %></td>
+          <td class="border px-4 py-2"><%= book.publishing_year %></td>
+          <td class="border px-4 py-2"><%= book.quantity_in_stock %></td>
+          <td class="border px-4 py-2">
+            <%= link_to "Show", admin_book_path(book), class: "text-blue-600 hover:underline" %> |
+            <%= link_to "Edit", edit_admin_book_path(book), class: "text-yellow-600 hover:underline" %> |
+            <%= button_to "Delete", delete_admin_book_path(book), method: :patch, data: { confirm: "Are you sure?" }, class: "text-red-600 hover:underline" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+

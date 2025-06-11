@@ -1,0 +1,66 @@
+<div class="max-w-3xl mx-auto p-6 bg-white rounded shadow-md">
+  <h1 class="text-3xl font-bold mb-6 text-gray-800">Chi tiết</h1>
+
+  <div class="mb-4">
+    <p><span class="font-semibold text-gray-700 mr-[5px]">Tiêu đề:</span> <%= @book.title %></p>
+    <p><span class="font-semibold text-gray-700 mr-[5px]">Phụ đề:</span> <%= @book.subtitle %></p>
+    <p><span class="font-semibold text-gray-700 mr-[5px]">Năm xuất bản:</span> <%= @book.publishing_year %></p>
+    <p><span class="font-semibold text-gray-700 mr-[5px]">Số lượng tồn kho:</span> <%= @book.quantity_in_stock %></p>
+  </div>
+
+  <div class="mb-6">
+    <p class="font-semibold text-gray-700 mb-2">Mô tả:</p>
+    <p class="whitespace-pre-line text-gray-600"><%= @book.description %></p>
+  </div>
+
+  <hr class="my-6 border-gray-300">
+
+  <div class="mb-6">
+    <% if @book.author.present? %>
+      <p class="text-gray-700"><span class="font-semibold">Tác giả:</span> <%= @book.author.name %></p>
+    <% else %>
+      <p class="text-red-500 italic">Không có thông tin tác giả.</p>
+    <% end %>
+  </div>
+
+  <hr class="my-6 border-gray-300">
+
+  <div class="mb-6">
+    <% if @book.genre.present? %>
+      <p class="text-gray-700"><span class="font-semibold">Thể loại:</span> <%= @book.genre.name %></p>
+    <% else %>
+      <p class="text-red-500 italic">Không có thông tin thể loại.</p>
+    <% end %>
+  </div>
+
+  <div class="max-w-3xl mx-auto p-6 bg-white rounded shadow-md mt-[50px]">
+  <h3 class="text-xl font-semibold text-gray-800 mb-3">Đánh giá</h3>
+
+  <% if @book.ratings.present? %>
+    <div class="space-y-4">
+      <% @book.ratings.each do |rating| %>
+        <div class="p-4 bg-gray-50 rounded-lg border border-gray-200 shadow-sm">
+          <p class="text-lg font-medium text-gray-700">
+            <%= rating.user.name %>
+            <span class="ml-2 text-yellow-500">★ <%= rating.star %>/5</span>
+          </p>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="text-gray-500 italic">Chưa có đánh giá nào cho sách này.</p>
+  <% end %>
+  </div>
+
+  <div class="flex space-x-4 mt-8">
+    <%= link_to "Quay lại danh sách", user_books_path, class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition" %>
+    <!--
+    <%= link_to "Sửa sách", edit_admin_book_path(@book), class: "px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition" %>
+    <%= button_to "Xóa sách", admin_book_path(@book), method: :delete, data: { confirm: "Bạn có chắc muốn xóa sách này?" }, class: "px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition" %>
+  </div>
+    -->
+</div>
+
+
+
+

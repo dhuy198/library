@@ -1,0 +1,63 @@
+<div class="max-w-xl mx-auto p-6 bg-white rounded shadow mt-8">
+
+  <%= form_with model: [:admin, @book], local: true do |f| %>
+    <div class="mb-4">
+      <%= f.label :title, class: "block text-gray-700 font-medium mb-1" %>
+      <%= f.text_field :title, class: "w-full border border-gray-300 rounded px-3 py-2" %>
+    </div>
+    <div class="mb-4">
+      <%= f.label :image, class: "block text-gray-700 font-medium mb-1" %>
+      <%= f.text_field :image, class: "w-full border border-gray-300 rounded px-3 py-2" %>
+    </div>
+    <div class="mb-4">
+      <%= f.label :subtitle, class: "block text-gray-700 font-medium mb-1" %>
+      <%= f.text_field :subtitle, class: "w-full border border-gray-300 rounded px-3 py-2" %>
+    </div>
+    <div class="mb-4">
+      <%= f.label :publishing_year, class: "block text-gray-700 font-medium mb-1" %>
+      <%= f.number_field :publishing_year, class: "w-full border border-gray-300 rounded px-3 py-2" %>
+    </div>
+    <div class="mb-4">
+      <%= f.label :quantity_in_stock, class: "block text-gray-700 font-medium mb-1" %>
+      <%= f.number_field :quantity_in_stock, class: "w-full border border-gray-300 rounded px-3 py-2" %>
+    </div>
+    <div class="mb-4">
+      <%= f.label :description, class: "block text-gray-700 font-medium mb-1" %>
+      <%= f.text_field :description, class: "w-full border border-gray-300 rounded px-3 py-2" %>
+    </div>
+    <div class="mb-4">
+      <%= f.label :total, class: "block text-gray-700 font-medium mb-1" %>
+      <%= f.number_field :total, class: "w-full border border-gray-300 rounded px-3 py-2" %>
+    </div>
+    
+    
+
+
+    <!-- Author-->
+    <div class="mb-4 pt-4">
+      <%= f.fields_for :author do |author_fields| %>
+        <div>
+          <%= author_fields.label :name,"Author", class: "block text-gray-700" %>
+          <%= author_fields.text_field :name, placeholder: "Author name", class: "w-full border rounded px-3 py-2" %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Genre -->
+    <div class="mb-4 pt-4">
+      <%= f.fields_for :genre do |genre_fields| %>
+        <div>
+          <%= genre_fields.label :name, "Genre", class: "block text-gray-700" %>
+          <%= genre_fields.text_field :name, placeholder: "Genre name", class: "w-full border rounded px-3 py-2" %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="flex justify-between items-center">
+        <%= button_tag type: 'submit', class: "px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" do %>
+            Create Book
+        <% end %>
+        <%= link_to "Back", admin_books_path, class: "text-gray-600 hover:underline" %>
+        </div>
+  <% end %>
+</div>
