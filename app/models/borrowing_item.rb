@@ -5,6 +5,7 @@ class BorrowingItem < ApplicationRecord
   validate :valid_quantity
   
   private
+
   def valid_quantity
     if quantity.nil? || quantity <= 0
       errors.add(:quantity, "phải lớn hơn 0")

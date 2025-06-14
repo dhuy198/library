@@ -1,2 +1,4 @@
-module User::AuthorsHelper
+module User
+  module AuthorsHelper
+  end
 end

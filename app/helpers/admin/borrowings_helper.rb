@@ -1,2 +1,4 @@
-module Admin::BorrowingsHelper
+module Admin
+  module BorrowingsHelper
+  end
 end

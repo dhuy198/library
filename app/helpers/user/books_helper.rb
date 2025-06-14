@@ -1,2 +1,4 @@
-module User::BooksHelper
+module User
+  module BooksHelper
+  end
 end

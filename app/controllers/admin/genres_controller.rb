@@ -1,3 +1,5 @@
-class Admin::GenresController < ApplicationController
+module Admin
+  class GenresController < ApplicationController
   
+  end
 end

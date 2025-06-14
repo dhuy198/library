@@ -1,2 +1,4 @@
-module User::GenresHelper
+module User
+  module GenresHelper
+  end
 end

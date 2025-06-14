@@ -1,3 +1,5 @@
-class Admin::AuthorsController < ApplicationController
+module Admin
+  class AuthorsController < ApplicationController
  
+  end
 end

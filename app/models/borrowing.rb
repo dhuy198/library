@@ -4,7 +4,7 @@ class Borrowing < ApplicationRecord
   has_many :books, through: :borrowing_items
   accepts_nested_attributes_for :borrowing_items, allow_destroy: true
 
-  scope :active, -> {where(delete_flag: false)}
+  scope :active, -> { where(delete_flag: false) }
   after_create :decrease_book_quantity!
 
   private
@@ -12,9 +12,7 @@ class Borrowing < ApplicationRecord
   def decrease_book_quantity!
     borrowing_items.each do |item|
       book = item.book
-      if book && item.quantity.present? && item.quantity > 0
-        book.decrement!(:quantity_in_stock, item.quantity)
-      end
+      book.decrement!(:quantity_in_stock, item.quantity) if book && item.quantity.present? && item.quantity.positive?
     end
   end
 end

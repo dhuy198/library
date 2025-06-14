@@ -1,2 +1,4 @@
-module User::RatingsHelper
+module User
+  module RatingsHelper
+  end
 end

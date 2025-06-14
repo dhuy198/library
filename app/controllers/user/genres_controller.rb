@@ -1,7 +1,7 @@
-class User::GenresController < ApplicationController
-  def index
-  end
+module User
+  class GenresController < ApplicationController
+    def index; end
 
-  def show
+    def show; end
   end
 end

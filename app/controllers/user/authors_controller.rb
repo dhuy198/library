@@ -1,7 +1,7 @@
-class User::AuthorsController < ApplicationController
-  def index
-  end
+module User
+  class AuthorsController < ApplicationController
+    def index; end
 
-  def show
+    def show; end
   end
 end

@@ -1,2 +1,4 @@
-class Admins::RatingsController < ApplicationController
+module Admins
+  class RatingsController < ApplicationController
+  end
 end

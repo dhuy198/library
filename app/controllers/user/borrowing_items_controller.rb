@@ -1,7 +1,7 @@
-class User::BorrowingItemsController < ApplicationController
-  def index
-  end
+module User
+  class BorrowingItemsController < ApplicationController
+    def index; end
 
-  def show
+    def show; end
   end
 end

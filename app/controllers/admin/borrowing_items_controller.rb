@@ -1,2 +1,4 @@
-class Admins::BorrowingItemsController < ApplicationController
+module Admins
+  class BorrowingItemsController < ApplicationController
+  end
 end

@@ -1,2 +1,4 @@
-module User::BorrowingItemsHelper
+module User
+  module BorrowingItemsHelper
+  end
 end

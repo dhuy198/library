@@ -7,6 +7,5 @@ class User < ApplicationRecord
   has_many :ratings 
   has_many :books, through: :ratings
 
-  scope :active, -> { where(delete_flag: false)}
-
+  scope :active, -> { where(delete_flag: false) }
 end
