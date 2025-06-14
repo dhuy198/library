@@ -5,10 +5,31 @@
       <%= f.label :title, class: "block text-gray-700 font-medium mb-1" %>
       <%= f.text_field :title, class: "w-full border border-gray-300 rounded px-3 py-2" %>
     </div>
+    
     <div class="mb-4">
-      <%= f.label :image, class: "block text-gray-700 font-medium mb-1" %>
-      <%= f.text_field :image, class: "w-full border border-gray-300 rounded px-3 py-2" %>
+      <%= f.label :featured_image, "Ảnh bìa", class: "block text-gray-700 font-medium mb-1" %>
+      <div class="flex items-center space-x-4">
+
+        <label for="book_image" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 cursor-pointer">
+          Chọn ảnh
+        </label>
+
+        <span id="file-name" class="text-gray-600">Chưa chọn file nào</span>
+      </div>
+      <%= f.file_field :featured_image, accept: "image/*", class: "hidden", id: "book_image", onchange: "updateFileName()" %>
     </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        const fileInput = document.getElementById("book_image");
+        const fileName = document.getElementById("file-name");
+
+        fileInput.addEventListener("change", function() {
+          fileName.textContent = this.files[0]?.name || "Chưa chọn file nào";
+        });
+      });
+    </script>
+
     <div class="mb-4">
       <%= f.label :subtitle, class: "block text-gray-700 font-medium mb-1" %>
       <%= f.text_field :subtitle, class: "w-full border border-gray-300 rounded px-3 py-2" %>
@@ -23,12 +44,9 @@
     </div>
     <div class="mb-4">
       <%= f.label :description, class: "block text-gray-700 font-medium mb-1" %>
-      <%= f.text_field :description, class: "w-full border border-gray-300 rounded px-3 py-2" %>
+      <%= f.text_area :description, class: "w-full h-[95px] border border-gray-300 rounded px-3 py-2" %>
     </div>
-    <div class="mb-4">
-      <%= f.label :total, class: "block text-gray-700 font-medium mb-1" %>
-      <%= f.number_field :total, class: "w-full border border-gray-300 rounded px-3 py-2" %>
-    </div>
+    
     
     
 
@@ -61,3 +79,4 @@
         </div>
   <% end %>
 </div>
+

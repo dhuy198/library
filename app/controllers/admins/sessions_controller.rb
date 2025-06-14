@@ -1,27 +1,26 @@
-# frozen_string_literal: true
-
 class Admins::SessionsController < Devise::SessionsController
-
-  # GET /resource/sign_in
-  
-  # POST /resource/sign_in
-  # def create
-  #   super
-  # end
-
-  # DELETE /resource/sign_out
-  # def destroy
-  #   super
-  # end
-
-  # protected
-
-  # If you have extra params to permit, append them to the sanitizer.
-  # def configure_sign_in_params
-  #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
-  # end
   
   def after_sign_in_path_for(resource)
     admin_books_path 
   end
+
+  def create
+    if params[:admin][:email].blank? ||  params[:admin][:password].blank?
+      flash[:alert] = "Vui lòng nhập đầy đủ email và mật khẩu."
+      redirect_to admin_session_path
+      return
+    end
+
+
+    self.resource = warden.authenticate(auth_options)
+    if resource
+      set_flash_message!(:notice, :signed_in)
+      sign_in(resource_name, resource)
+      after_sign_in_path_for(resource)
+    else
+      redirect_to admin_session_path
+      flash[:alert] = "Sai email hoặc mật khẩu, vui lòng thử lại."
+    end
+  end
+
 end

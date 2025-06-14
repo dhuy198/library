@@ -8,7 +8,11 @@ class Book < ApplicationRecord
   accepts_nested_attributes_for :author, allow_destroy: :true
   accepts_nested_attributes_for :genre, allow_destroy: :true
   
+  has_one_attached :featured_image
+
   scope :active, -> { where(delete_flag: false) }
+  
+  # validates :title, presence: true
 
 end
 

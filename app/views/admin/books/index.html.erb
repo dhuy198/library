@@ -1,50 +1,55 @@
-<div class="max-w-[1400px] mx-auto">
+<div class="relative h-[60px] mb-[30px]">
+  <%= button_to "Log out", destroy_admin_session_path, method: :delete,
+      class: "absolute right-[20px] top-0 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700" %>
+</div>
 
-  <h1 class="text-3xl font-bold mb-6 inline-block mr-[20px]">
-    <%= link_to "Books", admin_books_path%>
-  </h1>
-  
-  <h1 class="text-3xl font-bold mb-6 inline-block mr-[20px]">
-    <%= link_to "Users", admin_users_path%>
-  </h1>
-  
+<div class="max-w-[1400px] mx-auto grid">
 
-  <h1 class="text-3xl font-bold mb-6 inline-block mr-[20px]">
-    <%= link_to "Borrowings", admin_borrowings_path%>
-  </h1>
-
-  <div class="mb-4 flex">
-    <%= link_to "New Book", new_admin_book_path, class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 inline-block mr-[30px]" %>
-    <%= button_to "Log out", destroy_admin_session_path, method: :delete, class: "px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 inline-block" %>
+  <!-- Navigation -->
+  <div class="flex flex-wrap gap-6 items-center mb-6 bg-[#0b1a33] py-[20px] px-[40px] items-center justify-between">
+    <%= link_to "Trang chủ", admin_books_path, class: "text-3xl font-bold text-white underline underline-offset-[10px]" %> 
+    <%= link_to "Danh sách người dùng", admin_users_path, class: "text-3xl font-bold text-white hover:underline hover:underline-offset-[10px]" %>
+    <%= link_to "Danh sách phiếu mượn sách", admin_borrowings_path, class: "text-3xl font-bold text-white hover:underline hover:underline-offset-[10px] transition-all duration-300" %>
   </div>
 
-  <table class="min-w-full border border-gray-300">
-    <thead>
-      <tr class="bg-gray-100">
-        <th class="border px-4 py-2">Title</th>
-        <th class="border px-4 py-2">Author</th>
-        <th class="border px-4 py-2">Genre</th>
-        <th class="border px-4 py-2">Year</th>
-        <th class="border px-4 py-2">Total</th>
-        <th class="border px-4 py-2">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @books.each do |book| %>
-        <tr>
-          <td class="border px-4 py-2"><%= book.title %></td>
-          <td class="border px-4 py-2"><%= book.author.name if book.author %></td>
-          <td class="border px-4 py-2"><%= book.genre.name if book.genre %></td>
-          <td class="border px-4 py-2"><%= book.publishing_year %></td>
-          <td class="border px-4 py-2"><%= book.quantity_in_stock %></td>
-          <td class="border px-4 py-2">
-            <%= link_to "Show", admin_book_path(book), class: "text-blue-600 hover:underline" %> |
-            <%= link_to "Edit", edit_admin_book_path(book), class: "text-yellow-600 hover:underline" %> |
-            <%= button_to "Delete", delete_admin_book_path(book), method: :patch, data: { confirm: "Are you sure?" }, class: "text-red-600 hover:underline" %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
+  <!-- Actions -->
+  <div class="mb-6 flex flex-wrap gap-4">
+    <%= link_to "New Book", new_admin_book_path, class: "px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" %>
+  </div>
+
+  <div class="grid grid-cols-3 gap-3">
+    <div class="col-span-2">
+      <div class="space-y-4">
+        <% @books.each do |book| %>
+          <div class="border border-gray-300 rounded-lg p-4 shadow-sm hover:shadow-md transition">
+            <div class="flex flex-col md:flex-row items-start md:items-center gap-4 relative">
+              
+              <div class="max-w-[100px] mr-[30px]">
+                <%= image_tag book.featured_image if book.featured_image.attached?%>
+              </div>
+              <div class="">
+                <h1 class="text-xl font-semibold text-gray-800 mb-[10px]">
+                  <%= link_to book.title, admin_book_path(book), class: "text-black-600" %>
+                </h1>
+                <p class="text-sm text-gray-600 mb-[10px]">Tác giả: <%= book.author&.name || "Không rõ" %></p>
+                <p class="text-sm text-gray-600 mb-[10px]">Thể loại: <%= book.genre&.name || "Không rõ" %></p>
+                <p class="text-sm text-gray-600 ">Năm xuất bản: <%= book.publishing_year %></p>                
+              </div>
+
+              <div class="flex gap-4 text-sm absolute right-[20px]">
+                <%= link_to "Chỉnh sửa", edit_admin_book_path(book), class: "text-yellow-600 hover:underline text-[16px]" %>
+                <%= button_to "Xóa", delete_admin_book_path(book), method: :patch, data: { confirm: "Are you sure?" }, class: "text-[16px] text-red-600 hover:underline" %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    
+    <div class="ml-4">Sidebar</div>
+
+  </div>
+  <!-- Books List -->
+  
 </div>
 
