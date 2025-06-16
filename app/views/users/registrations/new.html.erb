@@ -4,6 +4,11 @@
   <%= render "users/shared/error_messages", resource: resource %>
 
   <div class="mb-4">
+    <%= f.label :name, class: "block text-gray-700 font-semibold mb-2" %>
+    <%= f.text_field :name, autofocus: true, autocomplete: "name", class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" %>
+  </div>
+
+  <div class="mb-4">
     <%= f.label :email, class: "block text-gray-700 font-semibold mb-2" %>
     <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" %>
   </div>

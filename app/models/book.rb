@@ -12,7 +12,11 @@ class Book < ApplicationRecord
 
   scope :active, -> { where(delete_flag: false) }
   
-  # validates :title, presence: true
-
+  validates :title, presence: true
+  validates :author_id, presence: true, unless: -> { author.present? }
+  validates :genre_id, presence: true, unless: -> { genre.present? }
+  validates :publishing_year, numericality: { only_integer: true }, allow_nil: true
+  validates :quantity_in_stock, numericality: { greater_than_or_equal_to: 0 }, allow_nil: true
+  validates :total, numericality: { greater_than_or_equal_to: 0 }
 end
 

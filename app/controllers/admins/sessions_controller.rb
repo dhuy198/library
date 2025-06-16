@@ -5,9 +5,13 @@ class Admins::SessionsController < Devise::SessionsController
   end
 
   def create
-    if params[:admin][:email].blank? ||  params[:admin][:password].blank?
-      flash[:alert] = "Vui lòng nhập đầy đủ email và mật khẩu."
+    if !(params[:admin][:email] =~ URI::MailTo::EMAIL_REGEXP)
+      flash[:alert] = "Sai định dạng email"
       redirect_to admin_session_path
+      return
+    elsif params[:admin][:email].blank? ||  params[:admin][:password].blank?
+      flash[:alert] = "Vui lòng nhập đầy đủ email và mật khẩu."
+      redirect_to user_session_path
       return
     end
 

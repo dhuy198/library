@@ -1,0 +1,64 @@
+<div class="max-w-[1000px] mx-auto bg-white rounded shadow p-6 space-y-6">
+
+  <!-- Quay lại -->
+  <div class="flex justify-between items-center mb-6">
+    <h2 class="text-2xl font-bold text-gray-800">
+      Chi tiết phiếu mượn #<%= @borrowing.id %>
+    </h2>
+    <%= link_to "Quay lại", admin_borrowings_path, class: "text-blue-600 hover:underline" %>
+  </div>
+
+  <!-- Thông tin chung -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-gray-700">
+    <div>
+      <strong>Người mượn:</strong>
+      <span class="text-blue-700 font-medium"><%= @borrowing.user.name %></span>
+    </div>
+
+    <div>
+      <strong>Email:</strong>
+      <%= @borrowing.user.email %>
+    </div>
+
+    <div>
+      <strong>Ngày mượn:</strong>
+      <%= @borrowing.start_at&.strftime("%d/%m/%Y") || "N/A" %>
+    </div>
+
+    <div>
+      <strong>Hạn trả:</strong>
+      <%= @borrowing.end_at&.strftime("%d/%m/%Y") || "N/A" %>
+    </div>
+
+    <div>
+      <strong>Ngày thực trả:</strong>
+      <%= @borrowing.actual_end_at&.strftime("%d/%m/%Y") || content_tag(:span, "Chưa trả", class: "italic text-gray-500") %>
+    </div>
+
+    <div>
+      <strong>Trạng thái:</strong>
+      <% if @borrowing.actual_end_at %>
+        <span class="inline-block px-2 py-1 bg-red-100 text-red-700 text-xs font-semibold rounded">Đã trả</span>
+      <% else %>
+        <span class="inline-block px-2 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded">Chưa trả</span>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Danh sách sách -->
+  <% if @borrowing.borrowing_items.any? %>
+    <div class="mt-6">
+      <h3 class="text-lg font-semibold text-gray-800 mb-2">Danh sách sách đã mượn:</h3>
+      <ul class="list-disc list-inside text-gray-700">
+        <% @borrowing.borrowing_items.each do |item| %>
+          <li>
+            <strong><%= item.book.title %></strong> — <%= item.quantity %> quyển
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  <% else %>
+    <p class="text-gray-600 italic mt-4">Không có sách nào trong phiếu này.</p>
+  <% end %>
+
+</div>

@@ -17,7 +17,7 @@
             <%= item_fields.hidden_field :book_id %>
             <span class="text-gray-700 text-sm font-medium mr-[30px]"><%= book.title %></span>
             <span class="text-gray-700 text-sm font-medium mr-[30px]"><%= book.quantity_in_stock %></span>
-            <%= item_fields.number_field :quantity, min: 0, value: item_fields.object.quantity || 0,
+            <%= item_fields.number_field :quantity, value: item_fields.object.quantity || 0,
                 class: "w-20 border-gray-300 rounded-md shadow-sm text-center focus:ring-blue-500 focus:border-blue-500 absolute right-[10px]" %>
           </div>  
         <% end %>
@@ -31,12 +31,3 @@
   </div>
 <% end %>
 
-<% if @borrowing.errors.any? %>
-  <div class="text-red-600 text-sm mb-4">
-    <ul>
-      <% @borrowing.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>

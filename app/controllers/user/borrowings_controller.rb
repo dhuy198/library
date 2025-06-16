@@ -1,15 +1,20 @@
 class User::BorrowingsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_user
-
   def set_user 
     @user = current_user
   end
 
+  def show 
+    @borrowing = Borrowing.find(params[:id])
+  end
   def index 
     @borrowings = @user.borrowings.includes(:books)
+    @user = current_user
   end
 
-  def new 
+  def new
+    @user = current_user 
     @borrowing = @user.borrowings.new
     Book.all.each do |book|
       @borrowing.borrowing_items.build(book: book)

@@ -11,8 +11,14 @@ class Admin::BorrowingsController < ApplicationController
     else
       render :edit
     end 
-      
   end
+
+  def show
+    @borrowing = Borrowing.find(params[:id])
+    @user = @borrowing.user
+  end
+
+  
   def delete
     @borrowing = Borrowing.find(params[:id]) 
     @borrowing.update(delete_flag: true)

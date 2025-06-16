@@ -1,54 +1,66 @@
-<div class="max-w-[1400px] mx-auto">
+<div class="relative h-[60px] mb-[30px] flex items-center justify-between px-6 bg-gray-100 rounded shadow">
+  <div class="text-lg font-semibold text-gray-700">
+    <span class="mr-2">Xin chào: </span>
+    <span class="text-blue-700"><%= @user.name %></span>
+  </div>
 
-<div class="mb-[20px]">
-  <span class="text-3xl font-bold mr-[15px]"> 
-    <%= link_to "Thư viện", user_books_path%>
-  </span>
-  <span class="text-3xl font-bold"> 
-    <%= link_to "Mượn sách", user_borrowings_path%>
-  </span>
+  <%= button_to "Log out", destroy_user_session_path, method: :delete,
+      class: "px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition" %>
 </div>
 
-<div class="mb-4">
-  <%= button_to "Log out", destroy_user_session_path, method: :delete, class: "px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700" %>
 
-</div>
+<div class="max-w-[1400px] mx-auto grid">
 
-<table class="min-w-full border border-gray-300">
-  <thead>
-    <tr class="bg-gray-100">
-      <th class="border px-4 py-2">Title</th>
-      <th class="border px-4 py-2">Author</th>
-      <th class="border px-4 py-2">Genre</th>
-      <th class="border px-4 py-2">Year</th>
-      <th class="border px-4 py-2">Total</th>
-      <th class="border px-4 py-2">Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @books.each do |book| %>
-      <tr>
-        <td class="border px-4 py-2"><%= book.title %></td>
-        <td class="border px-4 py-2"><%= book.author.name if book.author %></td>
-        <td class="border px-4 py-2"><%= book.genre.name if book.genre %></td>
-        <td class="border px-4 py-2"><%= book.publishing_year %></td>
-        <td class="border px-4 py-2"><%= book.quantity_in_stock %></td>
-        <td class="border px-4 py-2">
+  <!-- Navigation -->
+    <div class="flex flex-wrap gap-6 items-center mb-6 bg-[#0b1a33] py-[20px] px-[40px] items-center justify-between">
+      <%= link_to "Trang chủ", user_books_path, class: "text-3xl font-bold text-white underline underline-offset-[10px]" %> 
+      <%= link_to "Tạo phiếu mượn sách", new_user_borrowing_path(), class: "text-3xl font-bold text-white hover:underline hover:underline-offset-[10px] mr-[50px]" %> 
+      <%= link_to "Lịch sử mượn sách", user_borrowings_path, class: "text-3xl font-bold text-white hover:underline hover:underline-offset-[10px] transition-all duration-300" %>
+    </div>
 
-          <%= link_to "Chi tiết", user_book_path(book), class: "text-blue-600 mr-[10px]" %> 
-          <%= link_to "Mượn sách", user_borrowings_path, class: "text-green-600 mr-[10px]" %> 
-          <%= link_to "Thêm đánh giá", new_user_book_rating_path(book), class: "text-yellow-600" %> 
-          <!--
-          <%= button_to "Delete", admin_book_path(book), method: :delete, data: { confirm: "Are you sure?" }, class: "text-red-600 hover:underline" %>
-          -->
+  <div class="grid grid-cols-3 gap-3">
+    <div class="col-span-2">
+      <div class="space-y-4">
+        <% @books.each do |book| %>
+          <%= link_to user_book_path(book), class: "block border border-gray-300 rounded-lg p-4 shadow-sm hover:shadow-md transition" do %>
+            <div class="flex flex-col md:flex-row items-start md:items-center gap-4 relative">
+              <div class="max-w-[100px] mr-[30px]">
+                <%= image_tag book.featured_image if book.featured_image.attached? %>
+              </div>
 
-        </td>
-      </tr>
+              <div class="flex-1">
+                <h1 class="text-xl font-semibold text-gray-800 mb-[10px]"><%= book.title %></h1>
+                <p class="text-sm text-gray-600 mb-[10px]">Tác giả: <%= book.author&.name %></p>
+                <p class="text-sm text-gray-600 mb-[10px]">Thể loại: <%= book.genre&.name %></p>
+                <p class="text-sm text-gray-600">Năm xuất bản: <%= book.publishing_year %></p>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+
+      </div>
+    </div>
+    
+    <div class="ml-4">
+  <div class="text-xl font-semibold mb-4 text-gray-800">Sách hay nên đọc</div>
+
+  <div class="space-y-4">
+    <% @books.first(2).each do |book| %>
+      <%= link_to user_book_path(book), class: "block border border-gray-300 rounded-lg p-4 shadow-sm hover:shadow-md transition" do %>
+        <div class="flex flex-col md:flex-row items-start md:items-center gap-4 relative">
+          <div class="max-w-[100px] mr-[30px]">
+            <%= image_tag book.featured_image if book.featured_image.attached? %>
+          </div>
+          <div class="flex-1">
+            <h1 class="text-xl font-semibold text-gray-800 mb-[10px]"><%= book.title %></h1>
+            <p class="text-sm text-gray-600 mb-[10px]">Thể loại: <%= book.genre&.name %></p>
+            <p class="text-sm text-yellow-600">Đánh giá: <%= book.ratings.average(:star)&.round(1) || "Chưa có" %></p>
+          </div>
+        </div>
+      <% end %>
     <% end %>
-  </tbody>
-</table>
+  </div>
 
-<div>
-
+  </div>
 </div>
- </div>
+

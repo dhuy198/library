@@ -1,1 +1,34 @@
+<div class="relative h-[60px] mb-[30px] flex items-center justify-between px-6 bg-gray-100 rounded shadow mb-4">
+  <div class="inline-block text-lg font-semibold text-gray-700">
+    <span class="mr-2">Xin chào: </span>
+    <span class="text-blue-700"><%= @user.name %></span>
+  </div>
+  <div class="absolute inline-block right-[40px] text-blue-700 hover:underline">
+    <%= link_to "Quay lại", user_books_path%>
+  </div>
+  
+</div>
+
 <%= render "form",  borrowing: @borrowing %>
+
+
+<% if @borrowing.errors.any? %>
+  <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4 mt-4">
+    <h2 class="font-bold mb-2">Có lỗi xảy ra:</h2>
+    <ul class="list-disc list-inside">
+      <% @borrowing.errors[:base].each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<% @borrowing.borrowing_items.each do |item| %>
+  <% if item.errors[:base].any? %>
+    <div class="bg-red-100 text-red-700 p-3 rounded mb-2">
+      <% item.errors[:base].each do |msg| %>
+        <p><%= msg %></p>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     resources :ratings
     resources :users
   end
+  
   namespace :admin do 
     resources :books do
       member do

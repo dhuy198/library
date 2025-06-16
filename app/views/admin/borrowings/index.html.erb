@@ -19,7 +19,6 @@
         <tr>
           <th class="px-6 py-3 text-left">ID</th>
           <th class="px-6 py-3 text-left">Người mượn</th>
-          <th class="px-6 py-3 text-left">Danh sách | Số lượng</th>
           <th class="px-6 py-3 text-left">Ngày mượn</th>
           <th class="px-6 py-3 text-left">Ngày dự kiến trả</th>
           <th class="px-6 py-3 text-left">Ngày trả thực tế</th>
@@ -29,38 +28,18 @@
 
       <tbody class="divide-y divide-gray-200 text-gray-800">
         <% @borrowings.each do |borrowing| %>
-          <tr class="hover:bg-gray-50 transition duration-200">
+          <tr class="hover:bg-gray-50 transition duration-200 cursor-pointer" data-link="<%= admin_borrowing_path(borrowing)%>">
+            
             <td class="px-6 py-4"><%= borrowing.id %></td>
-
             <td class="px-6 py-4">
-              <% if borrowing.user %>
-                <span class="text-blue-700 font-medium"><%= borrowing.user.email %></span>
-              <% else %>
-                <span class="text-red-500 italic">Không có</span>
-              <% end %>
+                <span class="text-blue-700 font-medium"><%= borrowing.user.name %></span>
             </td>
 
-            <td class="px-6 py-4">
-              <% if borrowing.borrowing_items.any? %>
-                <ul class="list-disc pl-4 space-y-1">
-                  <% borrowing.borrowing_items.each do |item| %>
-                    <li>
-                      <%= link_to item.book.title, admin_book_path(item.book),
-                          class: "text-blue-600 hover:underline" if item.book %>
-                      | <span class="text-gray-700 font-medium"><%= item.quantity %></span>
-                    </li>
-                  <% end %>
-                </ul>
-              <% else %>
-                <span class="text-gray-500 italic">Không có sách</span>
-              <% end %>
-            </td>
-
-            <td class="px-6 py-4"><%= l(borrowing.start_at, format: :long) if borrowing.start_at %></td>
-            <td class="px-6 py-4"><%= l(borrowing.end_at, format: :long) if borrowing.end_at %></td>
+            <td class="px-6 py-4"><%= borrowing.start_at.strftime("%d/%m/%Y") if borrowing.start_at %></td>
+            <td class="px-6 py-4"><%= borrowing.end_at.strftime("%d/%m/%Y") if borrowing.end_at %></td>
             <td class="px-6 py-4">
               <% if borrowing.actual_end_at %>
-                <%= l(borrowing.actual_end_at, format: :long) %>
+                <%= borrowing.actual_end_at.strftime("%d/%m/%Y") %>
               <% else %>
                 <span class="text-gray-500 italic">Chưa trả</span>
               <% end %>
@@ -81,3 +60,14 @@
 <% else %>
   <p class="text-gray-600 italic mt-4">Chưa có bản ghi mượn sách nào trong hệ thống.</p>
 <% end %>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll("tr[data-link]").forEach(function (row) {
+      row.addEventListener("click", function () {
+        window.location = row.getAttribute("data-link");
+      });
+    });
+  });
+</script>
+

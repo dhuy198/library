@@ -1,10 +1,15 @@
-<%= form_with model: [:user,book, rating], local: true do |f| %>
-  <div>
-    <%= f.label :star, "Điểm (1–5)" %>
-    <%= f.number_field :star, in: 1..5, required: true, class: "border p-1" %>
+<%= form_with model: [:user, book, rating], local: true, class: "max-w-md mx-auto bg-white p-6 rounded shadow-md" do |f| %>
+  <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">Gửi đánh giá cho sách</h2>
+
+  
+
+  <div class="mb-4">
+    <%= f.label :star, "Số sao (1–5)", class: "block text-gray-700 font-semibold mb-2" %>
+    <%= f.number_field :star, class: "w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400" %>
   </div>
 
-  <div class="mt-4">
-    <%= f.submit "Gửi đánh giá", class: "bg-blue-600 text-white px-4 py-2 rounded" %>
+  <div class="text-center">
+    <%= f.submit "Gửi đánh giá", class: "bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition duration-200" %>
   </div>
 <% end %>
+
