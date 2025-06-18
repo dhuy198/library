@@ -1,19 +1,12 @@
-import "@hotwired/turbo-rails"
-import Rails from "@rails/ujs"
-import "toggle_new_fields"
-// import Swal from "sweetalert2"
-import "controllers/books_controller"
-import "controllers/users_controller"
-
 document.addEventListener("turbo:load", () => {
-    document.querySelectorAll(".logout-btn").forEach((btn) => {
+    document.querySelectorAll(".delete-btn").forEach((btn) => {
         btn.addEventListener("click", function (e) {
             e.preventDefault()
             Swal.fire({
-                title: "Bạn chắc chắn muốn đăng xuất?",
-                icon: "warning",
+                title: "Xác nhận xóa sách?",
+                icon: "waring",
                 showCancelButton: true,
-                confirmButtonText: "Đăng xuất",
+                confirmButtonText: "Có",
                 cancelButtonText: "Hủy",
                 confirmButtonColor: "#d33",
                 cancelButtonColor: "#3085d6",

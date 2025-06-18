@@ -1,0 +1,51 @@
+
+<div class="flex justify-between items-center mb-6">
+    
+  <h2 class="text-2xl font-semibold mt-8 mb-4 text-gray-800">
+    Phiếu mượn của <%= @user.name %>
+  </h2>
+  <%= link_to "Quay lại", admin_users_path, class: "text-blue-600 hover:underline" %>
+</div>
+
+<% if @borrowings.any? %>
+  <div class="overflow-x-auto bg-white shadow-md rounded-lg">
+    <table class="min-w-full text-sm text-left text-gray-700">
+      <thead class="text-xs uppercase bg-gray-100 text-gray-600">
+        <tr>
+          <th class="px-6 py-3">ID</th>
+          <th class="px-6 py-3">Ngày mượn</th>
+          <th class="px-6 py-3">Ngày hẹn trả</th>
+          <th class="px-6 py-3">Ngày thực trả</th>
+          <th class="px-6 py-3">Trạng thái</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        <% @borrowings.each do |borrowing| %>
+          <tr class="hover:bg-gray-50 transition duration-150">
+            <td class="">
+              <%= link_to borrowing.id, admin_borrowing_path(borrowing), class: "block w-full h-full px-6 py-4" %>
+            </td>
+            <td class=""><%= link_to borrowing.start_at&.strftime("%d/%m/%Y"), admin_borrowing_path(borrowing), class: "block w-full h-full px-6 py-4 text-blue-600" %></td>
+            <td class=""><%= link_to borrowing.end_at&.strftime("%d/%m/%Y"), admin_borrowing_path(borrowing) ,class: "block w-full h-full px-6 py-4" %></td>
+            <td class="">
+              <%= link_to borrowing.actual_end_at&.strftime("%d/%m/%Y") || "—", admin_borrowing_path(borrowing) , class: "block w-full h-full px-6 py-4" %>
+            </td>
+            <td class="">
+              <% if borrowing.actual_end_at %>
+                <span class="inline-block px-2 py-1 text-xs font-semibold text-red-700 rounded-full">
+                  <%= link_to "Đã trả", admin_borrowing_path(borrowing), class: "block w-full h-full px-6 py-4" %>
+                </span>
+              <% else %>
+                <span class="inline-block px-2 py-1 text-xs font-semibold text-green-700 rounded-full">
+                  <%= link_to "Chưa trả", admin_borrowing_path(borrowing), class: "block w-full h-full px-6 py-4" %>
+                </span>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <p class="text-gray-500 italic mt-2">Người dùng này chưa có phiếu mượn nào.</p>
+<% end %>

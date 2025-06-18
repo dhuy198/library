@@ -1,0 +1,1 @@
+<%= link_to_unless current_page.first?, raw('&laquo; Newer'), url, :remote => remote,class: "px-3 py-1 rounded bg-white border hover:bg-blue-100" do |name| -%><span class="disabled"><%= name %></span><% end -%>

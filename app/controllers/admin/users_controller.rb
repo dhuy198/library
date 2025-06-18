@@ -1,8 +1,12 @@
 class Admin::UsersController < ApplicationController
   def index
-    @users = User.active
+    @users = User.active.page(params[:page]).per(5)
   end
 
+  def show 
+    @user = User.find(params[:id])
+    @borrowings = @user.borrowings
+  end
   def edit; end
 
   def update
