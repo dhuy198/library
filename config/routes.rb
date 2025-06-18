@@ -9,6 +9,8 @@ Rails.application.routes.draw do
         patch :pay
       end
     end
+    resources :genres
+    resources :authors
   end
 
   namespace :admin do

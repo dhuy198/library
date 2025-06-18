@@ -1,6 +1,6 @@
 class Admin::BorrowingsController < ApplicationController
   def index
-    @borrowings = Borrowing.all.includes(:user)
+    @borrowings = Borrowing.all.includes(:user).page(params[:page]).per(5)
   end
 
   def edit; end

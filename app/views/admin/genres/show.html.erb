@@ -1,0 +1,47 @@
+<div class="relative h-[60px] mb-[30px]">
+  <%= button_to "Log out", destroy_admin_session_path,
+      method: :delete,
+      class: "logout-btn absolute right-[20px] top-0 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700" %>
+</div>
+
+<div class="max-w-[1400px] mx-auto grid">
+
+  <div class="flex flex-wrap gap-6 items-center mb-6 bg-[#0b1a33] py-[20px] px-[40px] items-center justify-between">
+    <%= link_to "Trang chủ", admin_books_path, class: "text-3xl font-bold text-white hover:underline hover:underline-offset-[10px]" %> 
+    <%= link_to "Danh sách người dùng", admin_users_path, class: "text-3xl font-bold text-white hover:underline hover:underline-offset-[10px]" %>
+    <%= link_to "Danh sách phiếu mượn sách", admin_borrowings_path, class: "text-3xl font-bold text-white hover:underline hover:underline-offset-[10px] transition-all duration-300" %>
+  </div>
+</div>
+
+<div class="mb-6 flex flex-wrap gap-4 items-center">
+    <%= link_to "New Book", new_admin_book_path, class: "px-4 py-4 bg-blue-600 text-white rounded hover:bg-blue-700 inline-block" %>
+    <nav class="flex flex-wrap gap-4 bg-gray-100 px-6 py-3 rounded shadow text-gray-700">
+        <% @genres.each do |genre| %>
+        <%= link_to genre.name, admin_genre_path(genre), 
+            class: "px-4 py-2 rounded hover:bg-blue-500 hover:text-white transition bg-white shadow-sm border" %>
+        <% end %>
+    </nav>
+
+</div>
+
+
+<div class="max-w-[1200px] mx-auto p-6">
+  <h1 class="text-3xl font-bold mb-6 text-gray-800">Thể loại: <%= @genre.name %></h1>
+
+  <div class="grid grid-cols-2 gap-6">
+    <% @books.each do |book| %>
+      <%= link_to admin_book_path(book), class: "block border border-gray-300 rounded-lg p-4 shadow-sm hover:shadow-md transition" do %>
+        <div class="flex gap-4 items-center">
+          <div class="w-[80px]">
+            <%= image_tag book.featured_image if book.featured_image.attached? %>
+          </div>
+          <div>
+            <h2 class="text-xl font-semibold text-gray-900"><%= book.title %></h2>
+            <p class="text-gray-600 text-sm">Tác giả: <%= book.author&.name %></p>
+            <p class="text-gray-600 text-sm">Năm XB: <%= book.publishing_year %></p>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>

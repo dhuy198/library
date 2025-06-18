@@ -1,6 +1,6 @@
 <div class="max-w-xl mx-auto p-6 bg-white rounded shadow mt-8">
 
-  <%= form_with model: [:admin, @book], local: true do |f| %>
+  <%= form_with model: [:admin, @book], local: true, data: {turbo: false } do |f| %>
     <div class="mb-4">
       <%= f.label :title, class: "block text-gray-700 font-medium mb-1" %>
       <%= f.text_field :title, class: "w-full border border-gray-300 rounded px-3 py-2" %>
@@ -47,36 +47,67 @@
       <%= f.text_area :description, class: "w-full h-[95px] border border-gray-300 rounded px-3 py-2" %>
     </div>
     
-    
-    
-
-
-    <!-- Author-->
+    <!-- Author -->
     <div class="mb-4 pt-4">
-      <%= f.fields_for :author do |author_fields| %>
-        <div>
-          <%= author_fields.label :name,"Author", class: "block text-gray-700" %>
+      <%= f.label :author_id, "Chọn Author", class: "block text-gray-700" %>
+      <%= f.collection_select :author_id, Author.all, :id, :name,
+            { include_blank: "Tạo mới..." },
+            { id: "author-select", class: "w-full border rounded px-3 py-2" } %>
+
+      <div id="new-author-fields">
+        <%= f.fields_for :author do |author_fields| %>
+          <%= author_fields.label :name, "Hoặc tạo Author mới", class: "block text-gray-700 mt-2" %>
           <%= author_fields.text_field :name, placeholder: "Author name", class: "w-full border rounded px-3 py-2" %>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
 
     <!-- Genre -->
     <div class="mb-4 pt-4">
-      <%= f.fields_for :genre do |genre_fields| %>
-        <div>
-          <%= genre_fields.label :name, "Genre", class: "block text-gray-700" %>
+      <%= f.label :genre_id, "Chọn Genre", class: "block text-gray-700" %>
+      <%= f.collection_select :genre_id, Genre.all, :id, :name,
+            { include_blank: "Tạo mới..." },
+            { id: "genre-select", class: "w-full border rounded px-3 py-2" } %>
+
+      <div id="new-genre-fields">
+        <%= f.fields_for :genre do |genre_fields| %>
+          <%= genre_fields.label :name, "Hoặc tạo Genre mới", class: "block text-gray-700 mt-2" %>
           <%= genre_fields.text_field :name, placeholder: "Genre name", class: "w-full border rounded px-3 py-2" %>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
+
+
+
 
     <div class="flex justify-between items-center">
       <%= button_tag type: 'submit', class: "px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700" do %>
-        Create Book
+        Save
       <% end %>
       <%= link_to "Back", admin_books_path, class: "text-gray-600 hover:underline" %>
     </div>
   <% end %>
 </div>
 
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+  function toggleField(selectId, fieldId) {
+    const select = document.getElementById(selectId);
+    const field = document.getElementById(fieldId);
+
+    if (!select || !field) return;
+
+    function update() {
+      field.style.display = select.value === "" ? "block" : "none";
+    }
+
+    select.addEventListener("change", update);
+    update();
+  }
+
+  toggleField("author-select", "new-author-fields");
+  toggleField("genre-select", "new-genre-fields");
+});
+</script>
